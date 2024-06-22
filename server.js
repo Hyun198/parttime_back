@@ -6,10 +6,22 @@ const port = 8000;
 
 app.use(cors());
 
+async function launchBrowser() {
+    return await puppeteer.launch({
+        headless: true,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--disable-gpu'
+        ]
+    });
+}
 
 const crawling = async () => {
     try {
-        const browser = await puppeteer.launch();
+        const browser = await launchBrowser();
         const page = await browser.newPage();
         const url = 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=cgv+%EA%B9%80%ED%8F%AC%ED%95%9C%EA%B0%95';
 
